@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package msg;
+
+// snmp v2 请求信息
+message SnmpV2Request {
+    int32  timeout = 1;             // Request timeout (The default is 5sec)
+    int32  retries = 2;             // Number of retries (The default is `0`)
+    string securityLevel = 3;       // Security level (V3 specific)
+    string network = 4;             // See net.Dial parameter (The default is `udp`)
+    string address = 5;             // See net.Dial parameter IP:PORT
+    string community = 6;           // Community (V1 or V2c specific)
+    string userName = 7;            // Security name (V3 specific)
+    string authPassword = 8;        // Authentication protocol pass phrase (V3 specific)
+    string authProtocol = 9;        // Authentication protocol (V3 specific)
+    string privPassword = 10;       // Privacy protocol pass phrase (V3 specific)
+    string privProtocol = 11;       // Privacy protocol (V3 specific)
+    string securityEngineId = 12;   // Security engine ID (V3 specific)
+    string contextEngineId = 13;    // Context engine ID (V3 specific)
+    string contextName = 14;        // Context name (V3 specific)
+    string version = 15;            // SNMP version to use
+    string oid = 16;                // oid value
+
+}
+
+// 返回值
+message Result {
+    string oid = 1;             // OID值
+    string value = 2;           // OID值对应的采集信息
+}
+
+// snmp v2 响应信息
+message SnmpV2Response {
+    repeated Result result = 1;
+}
+
+// snmp v2 服务接口
+service SnmpV2Service {
+    rpc GetSnmpWalk(SnmpV2Request) returns (SnmpV2Response);
+}

@@ -1,0 +1,13 @@
+# System configuration
+system:
+  env: 'public'
+  port: 8888
+
+zap:
+  log-prefix: '[OS-SNMP]'   # 日志前缀
+  log-path: 'logs'          # 日志目录名称
+  log-max-size: 10          # 在进行切割之前，日志文件的最大大小（以MB为单位）
+  log-max-backups: 5        # 保留旧文件的最大个数
+  log-max-age: 30           # 保留旧文件的最大天数
+  log-compress : false      # 是否压缩/归档旧文件
+
