@@ -1,34 +1,32 @@
 package main
 
 import (
+	"fmt"
+	"github.com/crazy-me/os_snmp/initialize"
 	_ "github.com/crazy-me/os_snmp/initialize"
-	"github.com/crazy-me/os_snmp/msg"
-	"github.com/crazy-me/os_snmp/service"
+	"github.com/crazy-me/os_snmp/utils/global"
+	"go.uber.org/zap"
+	"google.golang.org/grpc"
+	"net"
+	"strconv"
 )
 
 //go:generate protoc --go_out=plugins=grpc:. ./proto/snmpWalk.proto
 
 func main() {
+	server := grpc.NewServer()
+	// GRPC服务注册
+	initialize.ServiceRegister(server)
 
-	requestInfo := msg.SnmpV2Request{
-		Timeout:          3,
-		Retries:          1,
-		SecurityLevel:    "",
-		Network:          "udp",
-		Address:          "192.168.31.138:161",
-		Community:        "public",
-		UserName:         "",
-		AuthPassword:     "",
-		AuthProtocol:     "",
-		PrivPassword:     "",
-		PrivProtocol:     "",
-		SecurityEngineId: "",
-		ContextEngineId:  "",
-		ContextName:      "",
-		Version:          "2c",
-		Oid:              "1.3.6.1.2.1.1.1 1.3.6.1.2.1.1.5 1.3.6.1.2.1.1.3",
+	// CONSUL服务注册
+	// ...
+
+	listener, err := net.Listen("tcp", ":"+strconv.Itoa(global.APP.System.Port))
+	if err != nil {
+		global.LOGGER.Errorf("tcp server err", zap.Any("err", err))
+		panic(err)
 	}
-
-	service.SnmpWalk(&requestInfo)
+	fmt.Printf("run server success! %s\n", "http://127.0.0.1:"+strconv.Itoa(global.APP.System.Port))
+	_ = server.Serve(listener)
 
 }
