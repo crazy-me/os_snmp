@@ -22,7 +22,7 @@ func TestSnmp(t *testing.T) {
 		Timeout:          2,
 		Retries:          1,
 		SecurityLevel:    "",
-		Network:          "tcp",
+		Network:          "udp",
 		Address:          "172.16.4.49:161",
 		Community:        "public",
 		UserName:         "",
