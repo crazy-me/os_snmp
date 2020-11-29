@@ -7,6 +7,7 @@ require (
 	github.com/geoffgarside/ber v1.1.0 // indirect
 	github.com/golang/protobuf v1.4.1
 	github.com/gosnmp/gosnmp v1.28.0
+	github.com/hashicorp/consul/api v1.8.0
 	github.com/k-sone/snmpgo v3.2.0+incompatible
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/spf13/viper v1.7.1
