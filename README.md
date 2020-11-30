@@ -20,10 +20,11 @@ docker run -d --name=consul -e CONSUL_BIND_INTERFACE=eth0 consul:1.7.3
 
 #### docker部署
 
-* 下载
+* 下载并编译
 
-```
-go get https://github.com/crazy-me/os_snmp
+```sh
+git clone https://github.com/crazy-me/os_snmp
+cd os_snmp && go build
 ```
 
 * 修改配置文件
@@ -75,6 +76,7 @@ docker build -t os_snmp .
 ```sh
 docker run -d -p 8800:8800 --name os_snmp os_snmp
 ```
+
 
 
 
