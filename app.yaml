@@ -1,7 +1,7 @@
 # System configuration
 system:
   env: 'public'
-  port: 8888
+  port: 8800
 
 zap:
   log-prefix: '[OS-SNMP]'   # 日志前缀
@@ -12,6 +12,6 @@ zap:
   log-compress : false      # 是否压缩/归档旧文件
 
 consul:
-  address: '49.232.147.113:8500' # consul 地址
+  address: '127.0.0.1:8500' # consul 地址
   interval: 5               # consul 健康检查间隔
   expire-time: 2            # consul 服务异常过期时间

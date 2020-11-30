@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+// consul agent -dev -ui -client 0.0.0.0
+
 type Register struct {
 	Id      string
 	Address string

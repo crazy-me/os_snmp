@@ -20,7 +20,7 @@ import (
 
 func main() {
 	args := utils.ParseArgs()
-	if args.Community != "config" {
+	if args.Community != "conf" {
 		// 命令模式
 		api.SnmpDebug(args)
 		os.Exit(1)
@@ -34,10 +34,10 @@ func main() {
 	// CONSUL服务注册
 	grpc_health_v1.RegisterHealthServer(server, &consul.HealthImpl{})
 	register := &consul.Register{
-		Id:      "os_snmp_v2",
-		Address: "49.232.147.113",
-		Port:    8888,
-		Tag:     []string{"snmp", "v2"},
+		Id:      "os_snmp_server",
+		Address: "127.0.0.1",
+		Port:    8800,
+		Tag:     []string{"snmp", "rpc"},
 		Name:    "os_snmp",
 	}
 	_, err := register.ServerRegister(global.APP.Consul.Address)

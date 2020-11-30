@@ -58,7 +58,7 @@ func helpInfo() {
 	fmt.Print(`
 请输入正确的运行参数!
 os_snmp支持以下两种运行方式:
-	*服务模式: ./os_snmp -c config
+	*服务模式: ./os_snmp -c conf
 	*命令模式: 
 		* v2c: ./os_snmp -v 2c -c public 192.168.1.1 1.3.6.1.2.1
 		*  v3: ./os_snmp -v 3  -u admin -l authPriv -a md5 -A abc@123 -x aes -X abc@123 192.168.1.1 1.3.6.1.2.1
