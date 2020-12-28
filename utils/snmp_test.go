@@ -10,7 +10,7 @@ import (
 )
 
 func TestSnmp(t *testing.T) {
-	conn, err := grpc.Dial("localhost:8888", grpc.WithInsecure())
+	conn, err := grpc.Dial("localhost:9200", grpc.WithInsecure())
 	if err != nil {
 		panic(err)
 	}
@@ -34,7 +34,7 @@ func TestSnmp(t *testing.T) {
 		ContextEngineId:  "",
 		ContextName:      "",
 		Version:          "2c",
-		Oid:              "1.3.6.1.2.1.1.1",
+		Oid:              "1.3.6.1.2.1.1.1 1.3.6.1.2.1.1.3", // 多个空格分隔
 	}
 	response, err := client.GetSnmpWalk(context.Background(), requestInfo)
 	if err != nil {

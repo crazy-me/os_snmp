@@ -7,7 +7,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-const configFile = "app.yaml"
+const configFile = "conf/app.yaml"
 
 func init() {
 	v := viper.New()

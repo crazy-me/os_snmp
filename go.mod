@@ -5,6 +5,7 @@ go 1.15
 require (
 	github.com/fsnotify/fsnotify v1.4.9
 	github.com/geoffgarside/ber v1.1.0 // indirect
+	github.com/gin-gonic/gin v1.6.3 // indirect
 	github.com/golang/protobuf v1.4.1
 	github.com/gosnmp/gosnmp v1.28.0
 	github.com/hashicorp/consul/api v1.8.0

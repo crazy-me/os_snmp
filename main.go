@@ -35,8 +35,8 @@ func main() {
 	grpc_health_v1.RegisterHealthServer(server, &consul.HealthImpl{})
 	register := &consul.Register{
 		Id:      "os_snmp_server",
-		Address: "127.0.0.1",
-		Port:    8800,
+		Address: utils.GetOutboundIP(),
+		Port:    global.APP.System.Port,
 		Tag:     []string{"snmp", "rpc"},
 		Name:    "os_snmp",
 	}
@@ -51,7 +51,8 @@ func main() {
 		global.LOGGER.Errorf("tcp server err", zap.Any("err", err))
 		panic(err)
 	}
-	fmt.Printf("run server success! %s\n", "http://127.0.0.1:"+strconv.Itoa(global.APP.System.Port))
+
+	fmt.Printf("server run successful! http://%s:%s\n", utils.GetOutboundIP(), strconv.Itoa(global.APP.System.Port))
 	_ = server.Serve(listener)
 
 }

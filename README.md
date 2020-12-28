@@ -23,7 +23,7 @@ docker run -d --name=consul -e CONSUL_BIND_INTERFACE=eth0 consul:1.7.3
 * 下载并编译
 
 ```sh
-git clone https://github.com/crazy-me/os_snmp
+go get github.com/crazy-me/os_snmp
 cd os_snmp && go build
 ```
 

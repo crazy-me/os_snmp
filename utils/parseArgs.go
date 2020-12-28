@@ -17,8 +17,8 @@ func ParseArgs() *msg.SnmpV2Request {
 	timeout := flag.Int("t", 5, "Request timeout (number of seconds)")
 	retries := flag.Int("r", 1, "Number of retries")
 	securityLevel := flag.String("l", "NoAuthNoPriv", "Security level (NoAuthNoPriv|AuthNoPriv|AuthPriv)")
-	network := flag.String("p", "udp", "default udp (udp|udp6|tcp|tcp6)")
-	address := flag.String("h", "", "Request host to port (127.0.0.1:161)")
+	network := flag.String("type", "udp", "default udp (udp|udp6|tcp|tcp6)")
+	port := flag.String("p", "161", "Request host to port default 161")
 	community := flag.String("c", "public", "set think Community")
 	userName := flag.String("u", "", "Security name")
 	authPassword := flag.String("A", "", "Authentication protocol pass phrase")
@@ -29,7 +29,6 @@ func ParseArgs() *msg.SnmpV2Request {
 	contextEngineId := flag.String("E", "", "Context engine ID")
 	contextName := flag.String("n", "", "Context name")
 	version := flag.String("v", "2c", "SNMP version to use (2c|3)")
-	oid := flag.String("o", "", "set this oid value")
 	flag.Parse()
 
 	requestInfo := &msg.SnmpV2Request{
@@ -37,7 +36,7 @@ func ParseArgs() *msg.SnmpV2Request {
 		Retries:          int32(*retries),
 		SecurityLevel:    *securityLevel,
 		Network:          *network,
-		Address:          *address,
+		Address:          commandArgs[len(commandArgs)-2] + ":" + *port,
 		Community:        *community,
 		UserName:         *userName,
 		AuthPassword:     *authPassword,
@@ -48,7 +47,7 @@ func ParseArgs() *msg.SnmpV2Request {
 		ContextEngineId:  *contextEngineId,
 		ContextName:      *contextName,
 		Version:          *version,
-		Oid:              *oid,
+		Oid:              commandArgs[len(commandArgs)-1],
 	}
 
 	return requestInfo
@@ -64,17 +63,10 @@ os_snmp支持以下两种运行方式:
 		*  v3: ./os_snmp -v 3  -u admin -l authPriv -a md5 -A abc@123 -x aes -X abc@123 192.168.1.1 1.3.6.1.2.1
 	参数选项:
 	SNMP Version 2c specific
-		-v -v 1|2c|3      specifies SNMP version to use
-		-c COMMUNITY      set the community string
+		-v -v 1|2c|3      specifies SNMP version to use default 2c
+		-c COMMUNITY      set the community string default public
+		-p PORT						set the port string default 161
 	SNMP Version 3 specific
-		-a PROTOCOL       set authentication protocol (MD5|SHA)
-		-A PASSPHRASE     set authentication protocol pass phrase
-		-e ENGINE-ID      set security engine ID (e.g. 800000020109840301)
-		-E ENGINE-ID      set context engine ID (e.g. 800000020109840301)
-		-l LEVEL          set security level (noAuthNoPriv|authNoPriv|authPriv)
-		-n CONTEXT        set context name (e.g. bridge1)
-		-u USER-NAME      set security name (e.g. bert)
-		-x PROTOCOL       set privacy protocol (DES|AES)
-		-X  PASSPHRASE    set privacy protocol pass phrase
+		
  `)
 }
