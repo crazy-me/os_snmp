@@ -10,7 +10,7 @@ import (
 )
 
 func TestSnmp(t *testing.T) {
-	conn, err := grpc.Dial("localhost:9200", grpc.WithInsecure())
+	conn, err := grpc.Dial("localhost:8800", grpc.WithInsecure())
 	if err != nil {
 		panic(err)
 	}
@@ -23,7 +23,7 @@ func TestSnmp(t *testing.T) {
 		Retries:          1,
 		SecurityLevel:    "",
 		Network:          "udp",
-		Address:          "172.16.4.49:161",
+		Address:          "127.0.0.1:161",
 		Community:        "public",
 		UserName:         "",
 		AuthPassword:     "",
@@ -34,7 +34,7 @@ func TestSnmp(t *testing.T) {
 		ContextEngineId:  "",
 		ContextName:      "",
 		Version:          "2c",
-		Oid:              "1.3.6.1.2.1.1.1 1.3.6.1.2.1.1.3", // 多个空格分隔
+		Oid:              "1.3.6.1.2.1.1.1", // 1.3.6.1.4.1.2021.4.5
 	}
 	response, err := client.GetSnmpWalk(context.Background(), requestInfo)
 	if err != nil {
@@ -42,5 +42,4 @@ func TestSnmp(t *testing.T) {
 		os.Exit(1)
 	}
 	fmt.Println(response.Result)
-
 }

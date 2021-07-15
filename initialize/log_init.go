@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-func init() {
+func LogInit() {
 	// 是否有日志目录
 	isDir, _ := utils.DirExists(global.APP.Zap.LogPath)
 	if !isDir {
@@ -44,12 +44,12 @@ func getEncoder() zapcore.Encoder {
 	return zapcore.NewConsoleEncoder(encoderConfig)
 }
 
-// 定义日志输出时间格式
+// CustomTimeEncoder 定义日志输出时间格式
 func CustomTimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
 	enc.AppendString(t.Format(global.APP.Zap.LogPrefix + "2006-01-02/15:04:05.000"))
 }
 
-// 定义日志文件名称
+// CustomLoggerName 定义日志文件名称
 func CustomLoggerName() string {
 	return global.APP.Zap.LogPath + string(os.PathSeparator) + time.Now().Format("2006-01-02") + ".log"
 }

@@ -5,13 +5,17 @@ import (
 	"github.com/crazy-me/os_snmp/utils/global"
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
+	"github.com/toolkits/pkg/file"
 )
 
-const configFile = "conf/app.yaml"
+const configFile = "app.yaml"
 
-func init() {
+func LoadConfInit(conf string) {
+	if conf == "" || !file.IsExist(conf) {
+		conf = configFile
+	}
 	v := viper.New()
-	v.SetConfigFile(configFile)
+	v.SetConfigFile(conf)
 	err := v.ReadInConfig()
 	if err != nil {
 		panic(fmt.Errorf("Configuration file failed to load: %s \n", err))
@@ -24,7 +28,6 @@ func init() {
 		if err1 != nil {
 			fmt.Println(err)
 		}
-
 	})
 
 	err2 := v.Unmarshal(&global.APP)

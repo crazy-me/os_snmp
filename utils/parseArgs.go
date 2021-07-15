@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func ParseArgs() *msg.SnmpV2Request {
+func ParseArgs() (*msg.SnmpV2Request, string) {
 	commandArgs := os.Args
 	if len(commandArgs) == 1 {
 		helpInfo()
@@ -29,6 +29,7 @@ func ParseArgs() *msg.SnmpV2Request {
 	contextEngineId := flag.String("E", "", "Context engine ID")
 	contextName := flag.String("n", "", "Context name")
 	version := flag.String("v", "2c", "SNMP version to use (2c|3)")
+	configs := flag.String("conf", "", "snmp server config file")
 	flag.Parse()
 
 	requestInfo := &msg.SnmpV2Request{
@@ -49,24 +50,27 @@ func ParseArgs() *msg.SnmpV2Request {
 		Version:          *version,
 		Oid:              commandArgs[len(commandArgs)-1],
 	}
-
-	return requestInfo
+	return requestInfo, *configs
 }
 
 func helpInfo() {
 	fmt.Print(`
-请输入正确的运行参数!
 os_snmp支持以下两种运行方式:
-	*服务模式: ./os_snmp -c conf
+	*服务模式: ./os_snmp -conf file path
 	*命令模式: 
 		* v2c: ./os_snmp -v 2c -c public 192.168.1.1 1.3.6.1.2.1
-		*  v3: ./os_snmp -v 3  -u admin -l authPriv -a md5 -A abc@123 -x aes -X abc@123 192.168.1.1 1.3.6.1.2.1
+		*  v3: ./os_snmp -v 3  -u admin -l authPriv -a md5 -A abc@123 -x AES 192.168.1.1 1.3.6.1.2.1
 	参数选项:
 	SNMP Version 2c specific
-		-v -v 1|2c|3      specifies SNMP version to use default 2c
-		-c COMMUNITY      set the community string default public
-		-p PORT						set the port string default 161
+		-v 1|2c|3      	specifies SNMP version to use default 2c
+		-c COMMUNITY    set the community string default public
+		-p PORT		 	set the port string default 161
 	SNMP Version 3 specific
-		
+		-v 1|2c|3      	specifies SNMP version to use default 2c
+		-u admin		Security name
+		-l authPriv		Security level (NoAuthNoPriv|AuthNoPriv|AuthPriv)
+		-a encryption	Authentication protocol (MD5|SHA)
+		-A pass			Authentication protocol pass phrase
+		-x privProtocol Privacy protocol (DES|AES)
  `)
 }

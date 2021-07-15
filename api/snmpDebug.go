@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/crazy-me/os_snmp/msg"
 	"github.com/crazy-me/os_snmp/service"
+	"log"
 )
 
 type ResponseMessage struct {
@@ -17,6 +18,7 @@ func SnmpDebug(request *msg.SnmpV2Request) {
 	message := &ResponseMessage{}
 	list, err := service.SnmpWalk(request)
 	if err != nil {
+		log.Println("snmp cli err:", err)
 		message.Code = 500
 		message.Msg = err.Error()
 	} else {
@@ -34,5 +36,4 @@ func SnmpDebug(request *msg.SnmpV2Request) {
 
 	bytes, err := json.Marshal(message)
 	fmt.Println(string(bytes))
-
 }

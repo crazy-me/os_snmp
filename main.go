@@ -19,8 +19,10 @@ import (
 //go:generate protoc --go_out=plugins=grpc:. ./proto/snmpWalk.proto
 
 func main() {
-	args := utils.ParseArgs()
-	if args.Community != "conf" {
+	args, c := utils.ParseArgs()
+	initialize.LoadConfInit(c)
+	initialize.LogInit()
+	if c == "" {
 		// 命令模式
 		api.SnmpDebug(args)
 		os.Exit(1)
@@ -54,5 +56,4 @@ func main() {
 
 	fmt.Printf("server run successful! http://%s:%s\n", utils.GetOutboundIP(), strconv.Itoa(global.APP.System.Port))
 	_ = server.Serve(listener)
-
 }

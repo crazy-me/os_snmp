@@ -19,3 +19,4 @@
 
 # log ignore
 logs/
+os_snmp
